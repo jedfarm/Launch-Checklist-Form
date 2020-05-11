@@ -14,29 +14,30 @@
 
 window.addEventListener("load", function() {
    let form = document.querySelector("form");
-   form.addEventListener("submit", function(event) {
+   let button = document.getElementById("formSubmit");
+  
+   button.addEventListener("click", function(event) {
+      event.preventDefault();
       let integrityCheck = [0, 0, 0, 0];
       let fields = ["Pilot Name", "Co-pilot Name", "Fuel Level", "Cargo Mass"];
       let pilotName = document.getElementById("pilotName");
       let copilotName = document.getElementById("copilotName");
       let fuelLevel = document.getElementById("fuelLevel");
       let cargoMass = document.getElementById("cargoMass");
-      
+      let fuelStatus = document.getElementById("fuelStatus");
+      let cargoStatus = document.getElementById("cargoStatus");
+
       if (pilotName.value.length == 0){
-         integrityCheck[0] = 1;
-         
+         integrityCheck[0] = 1;  
       }
       if (copilotName.value.length == 0){
          integrityCheck[1] = 1;
-         
       }
       if (fuelLevel.value.length == 0){
          integrityCheck[2] = 1;
-         
       } else if (isNaN(fuelLevel.value)){
          integrityCheck[2] = 10;
       }
-
       if (cargoMass.value.length == 0){
          integrityCheck[3] = 1;
       } else if (isNaN(cargoMass.value)){
@@ -66,12 +67,30 @@ window.addEventListener("load", function() {
       } else if (integritySum > 110){
          alert("Fuel Level and Cargo Mass require numbers, also all fields must be filled out before submission");
       } else {
-         alert("You are good to go!");
-      }
- 
-      
+         // Updating shuttle requeriments
+         let pilotStatus = document.getElementById("pilotStatus");
+         pilotStatus.innerHTML = `Pilot ${pilotName.value} Ready`;
+         let copilotStatus = document.getElementById("copilotStatus");
+         copilotStatus.innerHTML = `Co-pilot ${copilotName.value} Ready`; 
+         if(fuelLevel.value < 10000){
+            document.getElementById("faultyItems").style.visibility = "visible";
+            fuelStatus.innerHTML = "There is no enough fuel for the journey";
+            document.getElementById("launchStatus").innerHTML = "Shuttle Not Ready for Launch";
+            document.getElementById("launchStatus").style.color = "red";
+         } else if (cargoMass.value > 10000) {
+            document.getElementById("faultyItems").style.visibility = "visible";
+            cargoStatus.innerHTML = "There is too much mass for the shuttle to take off";
+            document.getElementById("launchStatus").innerHTML = "Shuttle Not Ready for Launch";
+            document.getElementById("launchStatus").style.color = "red";
+         } else {
+            document.getElementById("launchStatus").innerHTML = "Shuttle is Ready for Launch";
+            document.getElementById("launchStatus").style.color = "green";
+         }
+      } 
    });
-   // Updating shuttle requeriments
-   let pilotStatus = document.getElementById("pilotStatus");
-   
+
+   // form.addEventListener("submit", function(event) {
+
+   // });
+  
 });
