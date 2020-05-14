@@ -92,5 +92,28 @@ window.addEventListener("load", function() {
    // form.addEventListener("submit", function(event) {
 
    // });
+
+   // Fetching planetary data
+   let missionTarget = document.getElementById("missionTarget");
+   let ol=document.createElement('ol');
+   missionTarget.appendChild(ol);
+   let destinationHeaders = ["name", "diameter", "star", "distance", "moons"];
+   let headers = ["Name: ", "Diameter: ", "Star: ", "Distance from Earth: ", "Number of Moons: "];
+   fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response){
+        response.json().then(function(json) { 
+           console.log(json);
+            let destinationIndex = Math.floor(Math.random() * 6);
+            for (let i = 0; i < destinationHeaders.length; i++){
+               let li=document.createElement('li');
+               ol.appendChild(li);
+               li.innerHTML = headers[i] + json[destinationIndex][destinationHeaders[i]];
+            }
+            let img=document.createElement('img');
+                //img.id = 'avatar';
+                missionTarget.appendChild(img);
+                img.src = json[destinationIndex].image;
+         });
+      });
+
   
 });
