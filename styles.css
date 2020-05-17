@@ -52,22 +52,9 @@ button {
     margin: 10px 0;
 }
 
-ol {
-    
-    list-style-position: outside;
-    /* text-align: left; */
-    padding: 0;
-    margin: 0;
-    list-style-type: decimal; 
-   
-  }
-
-  ol > li{
+table {
+    width: 100%;
     text-align: center;
-   
   }
-  ol > li:before {
-    float: left;
-}
 
   

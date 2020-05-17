@@ -109,13 +109,24 @@ window.addEventListener("load", function() {
         response.json().then(function(json) { 
            console.log(json);
             let destinationIndex = Math.floor(Math.random() * 6);
+            let table = document.createElement('table');
             for (let i = 0; i < destinationHeaders.length; i++){
-               let li=document.createElement('li');
-               ol.appendChild(li);
-               li.innerHTML = headers[i] + json[destinationIndex][destinationHeaders[i]];
+               let tr = document.createElement('tr');   
+               let td1 = document.createElement('td');
+               let td2 = document.createElement('td');
+               let text1 = document.createTextNode((i+1) + ".");
+               let text2 = document.createTextNode(headers[i] + json[destinationIndex][destinationHeaders[i]]);
+
+               td1.appendChild(text1);
+               td2.appendChild(text2);
+               tr.appendChild(td1);
+               tr.appendChild(td2);
+
+               table.appendChild(tr);   
             }
+            document.getElementById("missionTarget").appendChild(table);
+            
             let img=document.createElement('img');
-                //img.id = 'avatar';
                 missionTarget.appendChild(img);
                 img.src = json[destinationIndex].image;
          });
